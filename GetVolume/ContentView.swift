@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct ContentView: View {
     var body: some View {
@@ -14,8 +15,18 @@ struct ContentView: View {
                 .imageScale(.large)
                 .foregroundStyle(.tint)
             Text("Hello, world!")
-        }
-        .padding()
+        }.padding()
+            .onAppear {
+                // 取得
+                let audioSession = AVAudioSession.sharedInstance()
+                do {
+                    try audioSession.setActive(true)
+                    let volume = audioSession.outputVolume
+                    print("Output Volume: \(volume)")
+                } catch {
+                    print("Failed to set audio session active: \(error)")
+                }
+            }
     }
 }
 
